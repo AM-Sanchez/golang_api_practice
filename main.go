@@ -13,7 +13,7 @@ func createMessage(w http.ResponseWriter, status int, message string) {
 	w.Write([]byte(fmt.Sprintf(`{"message": "%s"}`, message)))
 }
 
-func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	switch r.Method {
 	case "GET":
@@ -33,7 +33,6 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	// hello := "hello world\n"
 	// print(hello)
-	s := &server{}
-	http.Handle("/", s)
+	http.HandleFunc("/", home)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
